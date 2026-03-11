@@ -47,18 +47,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.http import HttpResponse  # ✅ Add this for a simple homepage
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView
-)
+# ✅ Add this import for JWT
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # ROOT HOMEPAGE (prevents 404 on Render domain)
-    path('', lambda request: HttpResponse("Welcome to the Real Estate API!")),
 
     # AUTH
     path("api/auth/", include("accounts.urls")),
@@ -79,7 +73,4 @@ urlpatterns = [
 
 # ✅ Serve media files in DEBUG mode
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
