@@ -2,55 +2,41 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# ------------------------------------------------
+# Base Directory
+# ------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
-
+# ------------------------------------------------
+# Environment Variables
+# ------------------------------------------------
 PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY", "")
 PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY", "")
 
-# if not PAYSTACK_SECRET_KEY:
-#     raise ValueError("PAYSTACK_PUBLIC_KEY and PAYSTACK_SECRET_KEY must be set in the .env file")
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# ------------------------------------------------
+# Security
+# ------------------------------------------------
 SECRET_KEY = 'django-insecure-6njj80&q2@=vux7e_rn#2&4ms(all8s_%b4^9y=s!@8#4m5mv!'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-
-DEBUG = False 
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "backendlastproject.onrender.com",
     ".onrender.com",
-    # "127.0.0.1",
-    # "localhost",
 ]
-
 
 CSRF_TRUSTED_ORIGINS = [
     "https://backendlastproject.onrender.com",
     "https://realestatefronten.netlify.app",
-    ]
+]
 
-
-
-
-# ALLOWED_HOSTS = [ "backendlastproject.onrender.com"]
-
-#"backendlastproject-1.onrender.com", "backendlastproject-assets.onrender.com",
-
-
-# Application definition
-
+# ------------------------------------------------
+# Installed Apps
+# ------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,43 +44,45 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #apps
+
+    # Project apps
     'accounts.apps.AccountsConfig',
     'listings.apps.ListingsConfig',
-    'rest_framework',
-    'corsheaders',
-    # 'rest_framework.authtoken',
-    "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
     'payments',
     'enquiries',
-    
+
+    # Third-party
+    'rest_framework',
+    'corsheaders',
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
-
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": [
-#         "rest_framework.authentication.TokenAuthentication",
-#     ],
-
-
+# ------------------------------------------------
+# Django REST Framework
+# ------------------------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
+# ------------------------------------------------
+# JWT Settings
+# ------------------------------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-
+# ------------------------------------------------
+# Middleware
+# ------------------------------------------------
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # ADD THIS
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,22 +91,37 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-#CORS_ALLOW_ALL_ORIGINS = True
+# ------------------------------------------------
+# CORS Settings
+# ------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
     "https://realestatefronten.netlify.app",
+    "https://backendlastproject.onrender.com",
 ]
+
 CORS_ALLOW_CREDENTIALS = True
-
-
-from corsheaders.defaults import default_headers
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
 ]
 
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
+# ------------------------------------------------
+# URL Configuration
+# ------------------------------------------------
 ROOT_URLCONF = 'realestate.urls'
 
+# ------------------------------------------------
+# Templates
+# ------------------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -134,31 +137,24 @@ TEMPLATES = [
     },
 ]
 
+# ------------------------------------------------
+# WSGI
+# ------------------------------------------------
 WSGI_APPLICATION = 'realestate.wsgi.application'
 
-
+# ------------------------------------------------
 # Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
+# ------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': BASE_DIR / 'db.sqlite3',
-     }
- }
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
-# import dj_database_url
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.environ.get("DATABASE_URL")
-#     )
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
-
+# ------------------------------------------------
+# Password Validators
+# ------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -174,51 +170,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# ------------------------------------------------
 # Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
+# ------------------------------------------------
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-#STATIC_URL = 'static/'
-
-#STATIC_URL = 'static/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'IMAGE')
-
-
-# Static files (CSS, JS, admin)
+# ------------------------------------------------
+# Static Files
+# ------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# STATIC_URL = '/static/'
+# ------------------------------------------------
+# Media Files (Images)
+# ------------------------------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-
-#email
+# ------------------------------------------------
+# Email Configuration
+# ------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gekibade@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-#EMAIL_HOST_PASSWORD =   
 EMAIL_PORT = 587
-EMAIL_USE_TLS =True
+EMAIL_USE_TLS = True
 
-#Paystack config
-
-
-# Default primary key field
-# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
-
+# ------------------------------------------------
+# Default Primary Key
+# ------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-#MEDIA_URL = '/IMAGE/'
 
