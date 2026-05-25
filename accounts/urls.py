@@ -1,17 +1,16 @@
-#from .views import VerifyEmailView
-from django.urls import path
+from django.urls import path  # ✅ this line is missing
 from .views import (
     RegisterView,
     LoginView,
     LogoutView,
-    ProfileView
+    ProfileView,
+    ActivateAccountView,
 )
-#app_name = "accounts"   # 👈 THIS LINE
+
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', RegisterView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', ProfileView.as_view(), name='profile'),
-   # path("verify-email/<str:token>/",VerifyEmailView.as_view(),name="verify-email"),
+    path('activate/<str:uidb64>/<str:token>/', ActivateAccountView.as_view(), name='activate'),
 ]
-

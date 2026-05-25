@@ -144,6 +144,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.CustomUser'  # ✅ add here
+
 # Password Validators
 AUTH_PASSWORD_VALIDATORS = [
     {

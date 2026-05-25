@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Payment(models.Model):
@@ -17,7 +17,7 @@ class Payment(models.Model):
     )
 
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,  # ✅ fixed
         on_delete=models.CASCADE,
         related_name="payments"
     )
@@ -26,7 +26,6 @@ class Payment(models.Model):
         "listings.Listing",
         on_delete=models.CASCADE,
         related_name="payments",
-       
         null=True,
         blank=True
     )
@@ -54,7 +53,3 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.user} | {self.reference} | ₦{self.amount / 100} | {self.status}"
-
-    
-
-
