@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://backendlastproject.onrender.com",
-    "https://realestatefronten.netlify.app",
+    "https://estatehhub.netlify.app",  # ✅ correct URL
 ]
 
 # ------------------------------------------------
@@ -112,15 +112,12 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
-
-# ------------------------------------------------
 # URL Configuration
-# ------------------------------------------------
+
 ROOT_URLCONF = 'realestate.urls'
 
-# ------------------------------------------------
+
 # Templates
-# ------------------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -136,14 +133,10 @@ TEMPLATES = [
     },
 ]
 
-# ------------------------------------------------
 # WSGI
-# ------------------------------------------------
 WSGI_APPLICATION = 'realestate.wsgi.application'
 
-# ------------------------------------------------
 # Database
-# ------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -151,9 +144,7 @@ DATABASES = {
     }
 }
 
-# ------------------------------------------------
 # Password Validators
-# ------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -169,9 +160,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# ------------------------------------------------
 # Internationalization
-# ------------------------------------------------
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -179,21 +168,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ------------------------------------------------
 # Static Files
-# ------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ------------------------------------------------
 # Media Files (Images)
-# ------------------------------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# ------------------------------------------------
 # Email Configuration
-# ------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gekibade@gmail.com'
@@ -201,8 +184,6 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# ------------------------------------------------
 # Default Primary Key
-# ------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
