@@ -91,12 +91,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ------------------------------------------------
+
 # CORS Settings
-# ------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
-    "https://realestatefronten.netlify.app",
-    "https://backendlastproject.onrender.com",
+    "http://localhost:5173",
+    "https://estatehhub.netlify.app",  # ✅ add this
 ]
 
 CORS_ALLOW_CREDENTIALS = True
