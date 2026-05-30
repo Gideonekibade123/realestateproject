@@ -99,6 +99,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://estatehhub.netlify.app",  # ✅ add this
 ]
 
+FRONTEND_URL = "https://estatehhub.netlify.app"
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
