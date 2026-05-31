@@ -94,17 +94,20 @@ MIDDLEWARE = [
 
 
 # CORS Settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://estatehhub.netlify.app",  # ✅ add this
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "https://estatehhub.netlify.app",  # ✅ add this
+# ]
 
 FRONTEND_URL = "https://estatehhub.netlify.app"
+
+CORS_ALLOW_ALL_ORIGINS = True  # ✅ temporary fix to confirm CORS works
 
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
+    "content-type",
 ]
 
 CORS_ALLOW_METHODS = [
