@@ -204,7 +204,7 @@ class ChangePasswordView(APIView):
 
 
 # =========================
-# Forgot Password
+# Forgot Password  ✅ FIXED
 # =========================
 class ForgotPasswordView(APIView):
     permission_classes = [AllowAny]
@@ -219,23 +219,23 @@ class ForgotPasswordView(APIView):
 
         try:
             user = User.objects.get(email=email)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}/"
+
+            try:
+                send_mail(
+                    subject="Reset your EstateHub password",
+                    message=f"Click the link to reset your password:\n\n{reset_link}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Email failed: {e}")
+
         except User.DoesNotExist:
-            return Response(
-                {"message": "If this email exists, a reset link has been sent."},
-                status=status.HTTP_200_OK
-            )
-
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
-        reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}/"
-
-        send_mail(
-            subject="Reset your EstateHub password",
-            message=f"Click the link to reset your password:\n\n{reset_link}",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=True,
-        )
+            pass
 
         return Response(
             {"message": "If this email exists, a reset link has been sent."},
