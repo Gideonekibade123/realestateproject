@@ -1,3 +1,4 @@
+import resend
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -6,7 +7,6 @@ from django.contrib.auth import authenticate, logout, get_user_model
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
@@ -204,7 +204,7 @@ class ChangePasswordView(APIView):
 
 
 # =========================
-# Forgot Password  ✅ FIXED
+# Forgot Password
 # =========================
 class ForgotPasswordView(APIView):
     permission_classes = [AllowAny]
@@ -224,13 +224,21 @@ class ForgotPasswordView(APIView):
             reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}/"
 
             try:
-                send_mail(
-                    subject="Reset your EstateHub password",
-                    message=f"Click the link to reset your password:\n\n{reset_link}",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],
-                    fail_silently=True,
-                )
+                resend.api_key = settings.RESEND_API_KEY
+                resend.Emails.send({
+                    "from": "EstateHub <onboarding@resend.dev>",
+                    "to": [email],
+                    "subject": "Reset your EstateHub password",
+                    "html": f"""
+                    <h2>Reset Your Password</h2>
+                    <p>Click the link below to reset your password:</p>
+                    <a href="{reset_link}" style="background:#e8c97e;padding:12px 24px;border-radius:8px;text-decoration:none;color:#000;font-weight:bold;">
+                        Reset Password
+                    </a>
+                    <p>This link expires in 24 hours.</p>
+                    <p>If you did not request this, ignore this email.</p>
+                    """
+                })
             except Exception as e:
                 print(f"Email failed: {e}")
 
