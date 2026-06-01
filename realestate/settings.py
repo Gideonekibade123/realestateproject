@@ -36,6 +36,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://estatehhub.netlify.app",  # ✅ correct URL
 ]
 
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # ------------------------------------------------
 # Installed Apps
 # ------------------------------------------------
@@ -106,7 +108,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://estatehhub.netlify.app",
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
