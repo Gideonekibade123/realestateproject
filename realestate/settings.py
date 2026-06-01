@@ -21,7 +21,8 @@ PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY", "")
 # ------------------------------------------------
 # Security
 # ------------------------------------------------
-SECRET_KEY = 'django-insecure-6njj80&q2@=vux7e_rn#2&4ms(all8s_%b4^9y=s!@8#4m5mv!'
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = False
 
@@ -101,7 +102,9 @@ MIDDLEWARE = [
 
 FRONTEND_URL = "https://estatehhub.netlify.app"
 
-CORS_ALLOW_ALL_ORIGINS = True  # ✅ temporary fix to confirm CORS works
+CORS_ALLOWED_ORIGINS = [
+    "https://estatehhub.netlify.app",
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
